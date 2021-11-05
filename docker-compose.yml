@@ -39,8 +39,10 @@ services:
       - db_shop-vol:/var/lib/postgresql/data
     networks:
       - db-to-shop
-    expose:
-      - 5432
+#    expose:
+#      - 5432
+#    ports:
+#      - "5431:5432"
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'postgres'
@@ -54,7 +56,9 @@ services:
     networks:
       - db-to-stock
     expose:
-      - 5431
+      - 5432
+    ports:
+      - "5431:5432"
     environment:
       POSTGRES_USER: 'postgres1'
       POSTGRES_PASSWORD: 'postgres1'

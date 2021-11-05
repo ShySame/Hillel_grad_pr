@@ -16,9 +16,9 @@ class Book(models.Model):
     rating = models.FloatField(default=0)
 
     def __str__(self):
-        return f'{self.title} - {self.author}'
+        return f'{self.title}'
 
 
-# class BookAuthor(models.Model):
-#     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-#     author = models.ForeignKey(Author, on_delete=models.CASCADE)
+class BookAuthor(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
