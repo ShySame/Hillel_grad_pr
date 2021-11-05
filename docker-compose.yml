@@ -1,0 +1,83 @@
+version: "3.9"
+
+services:
+
+  shop:
+    container_name: shop
+    build:
+      context: .
+      dockerfile: ./docker/shop/Dockerfile
+    networks:
+      - net
+      - db-to-shop
+    depends_on:
+      - dbshop
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./shop/:/usr/app
+
+  stockroom:
+    container_name: stockroom
+    build:
+      context: .
+      dockerfile: ./docker/stockroom/Dockerfile
+    networks:
+      - net
+      - db-to-stock
+    depends_on:
+      - dbstock
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./stockroom/:/usr/app
+
+  dbshop:
+    container_name: dbshop
+    image: postgres:latest
+    volumes:
+      - db_shop-vol:/var/lib/postgresql/data
+    networks:
+      - db-to-shop
+    expose:
+      - 5432
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'shop_db'
+
+  dbstock:
+    container_name: dbstock
+    image: postgres:latest
+    volumes:
+      - db_stock-vol:/var/lib/postgresql/data
+    networks:
+      - db-to-stock
+    expose:
+      - 5431
+    environment:
+      POSTGRES_USER: 'postgres1'
+      POSTGRES_PASSWORD: 'postgres1'
+      POSTGRES_DB: 'stock_db'
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@mail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    networks:
+      - net
+      - db-to-shop
+      - db-to-stock
+
+networks:
+  net:
+  db-to-shop:
+  db-to-stock:
+
+volumes:
+  db_shop-vol:
+  db_stock-vol:
