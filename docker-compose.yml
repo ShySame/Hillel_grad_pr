@@ -64,18 +64,18 @@ services:
       POSTGRES_PASSWORD: 'postgres1'
       POSTGRES_DB: 'stock_db'
 
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@mail.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    networks:
-      - net
-      - db-to-shop
-      - db-to-stock
+#  pgadmin:
+#    container_name: pgadmin
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: admin@mail.com
+#      PGADMIN_DEFAULT_PASSWORD: admin
+#    ports:
+#      - "5050:80"
+#    networks:
+#      - net
+#      - db-to-shop
+#      - db-to-stock
 
 networks:
   net:
