@@ -15,12 +15,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class AuthorSerializer(serializers.HyperlinkedModelSerializer):
     pk = serializers.IntegerField(read_only=True)
-    first_name = serializers.CharField(required=True)
-    last_name = serializers.CharField(required=True)
+    name = serializers.CharField(required=True)
 
     class Meta:
         model = Author
-        fields = ['pk', 'url', 'first_name', 'last_name', ]
+        fields = ['pk', 'url', 'name', ]
 
 
 class BookSerializer(serializers.HyperlinkedModelSerializer):

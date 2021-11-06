@@ -15,7 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class AuthorViewSet(viewsets.ModelViewSet):
-    queryset = Author.objects.all().order_by('first_name')
+    queryset = Author.objects.all().order_by('name')
     serializer_class = AuthorSerializer
 
 
