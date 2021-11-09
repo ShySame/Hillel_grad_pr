@@ -4,7 +4,8 @@ set -o errexit
 set -o nounset
 
 echo "Run manage.py migrations"
-python /usr/app/manage.py makemigrations
+python /usr/app/manage.py collectstatic --noinput
+python /usr/app/manage.py makemigrations --noinput
 python /usr/app/manage.py migrate --noinput
 
 echo "Run server"

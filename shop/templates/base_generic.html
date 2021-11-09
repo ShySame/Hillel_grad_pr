@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
+
+
+    <script src="{% static 'js/shop.js' %}"></script>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+
+
+    <!------ Include the above in your HEAD tag ---------->
+
+    <!-- page-header -->
+    <div class="page-header">
+        <div class=" container">
+            <header class="p-3 bg-dark text-white fixed-top">
+                <div class="d-flex flex-wrap align-items-center justify-content-between "
+                     style="margin-left: 5%">
+
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
+                        <li><a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Home</a></li>
+{#                        <li><a href="{% url 'book_list' %}" class="nav-link px-2 text-white">Posts</a></li>#}
+{#                        <li><a href="{% url 'book_category' %}" class="nav-link px-2 text-white">Category</a></li>#}
+                        <li>
+{#                            <button class="nav-link px-2 btn btn-secondary text-white js-contact"#}
+{#                                    data-url="{% url 'shop:help_me' %}">Help Me#}
+{#                            </button>#}
+                        </li>
+
+                    </ul>
+
+                    {#----------------------------------------------------------------------------------#}
+                    {% if user.is_authenticated %}
+                        <div class='justify-content-end ' style="margin-right: 5%">
+                            <div class="dropdown">
+                                <a href="#"
+                                   class="d-flex align-items-center text-white text-decoration-none"
+                                   id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                </a>
+                            </div>
+                            <div>
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <strong>{{ request.user.username }}</strong>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+{#                                    <a class="dropdown-item" href="{% url 'shop:post_create' %}">New Post</a>#}
+{#                                    <a class="dropdown-item" href="{% url 'shop:userposts' pk=user.pk %}">My posts</a>#}
+                                    <a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">Profile</a>
+
+                                    <hr class="dropdown-divider">
+
+                                    <a class="dropdown-item" href="{% url 'logout' %}?next=/shop">Sign out</a>
+                                    <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+
+                                </div>
+                                <img src="https://placekitten.com/400/400" alt="" width="42" height="42"
+                                     class="rounded-circle me-2">
+                            </div>
+                        </div>
+                        {#------------------------------------------------------------------------------#}
+                    {% else %}
+                        <div class="text-end">
+                            <button type="button" class="btn btn-outline-light me-2"><a
+                                    href="{% url 'login' %}">Login</a>
+                            </button>
+                            <button type="button" class="btn "><a href="{% url 'register' %}">Sign-up</a></button>
+                        </div>
+                    {% endif %}
+                </div>
+
+
+            </header>
+        </div>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-caption">
+
+                        <h1 class="page-title">{% block title %}{% endblock %}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.page-header-->
+
+</head>
+<body>
+
+<div class="modal fade" id="modal-contact">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+<!-- news -->
+<div class="card-section">
+    <div class="container">
+        <div class="card-block bg-white mb30">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <!-- section-title -->
+                    <div class="vl mar">{% block content %}{% endblock %}
+                        {% block pagination %}
+                            {% if is_paginated %}
+
+                                <ul class="pagination">
+
+                                    {% if page_obj.has_previous %}
+                                        <li><a class="btn btn-outline-info mb-4"
+                                               href="?page={{ page_obj.previous_page_number }}">Prev</a></li>
+                                    {% else %}
+                                        <li class="btn btn-outline-info mb-4 disabled"><span>Prev</span></li>
+                                    {% endif %}
+
+
+
+                                    {% if page_obj.number|add:'-4' > 1 %}
+                                        <li><a class="btn btn-outline-info mb-4"
+                                               href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% for i in page_obj.paginator.page_range %}
+                                        {% if page_obj.number == i %}
+                                            <li class="btn btn-outline-info mb-4 active">
+                                                <span>{{ i }} <span class="sr-only">(current)</span></span>
+                                            </li>
+                                        {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+                                            <li><a class="btn btn-outline-info mb-4"
+                                                   href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                                        <li><a class="btn btn-outline-info mb-4"
+                                               href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                                    {% endif %}
+
+                                    {% if page_obj.has_next %}
+                                        <li><a class='btn btn-outline-info mb-4'
+                                               href="?page={{ page_obj.next_page_number }}">Next</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="disabled btn btn-outline-info mb-4"><span>Next</span></li>
+                                    {% endif %}
+
+                                </ul>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+
+                    <!-- /.section-title -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+                Created by <a
+                    href="https://easetemplate.com/downloads/digital-marketing-website-template-hike-bold-design/"
+                    target="_blank">me and smbd else</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

@@ -20,7 +20,7 @@ class Author(models.Model):
 
 class Book(models.Model):
     category = models.ManyToManyField(Category, through='CategoryBook')
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=250)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     available = models.BooleanField(default=True)
     author = models.ManyToManyField(Author, through='BookAuthor')

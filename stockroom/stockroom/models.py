@@ -20,15 +20,14 @@ class Category(models.Model):
 
 class Book(models.Model):
     category = models.ManyToManyField(Category, through='CategoryBook')
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=250)
     author = models.ManyToManyField(Author, through='BookAuthor')
-    quantity = models.PositiveSmallIntegerField()
 
     class Meta:
         ordering = ('title',)
 
     def __str__(self):
-        return f'{self.title} - {self.author}'
+        return f'{self.title}'
 
 
 class CategoryBook(models.Model):
@@ -50,7 +49,7 @@ COVERS = (
 
 
 class BookInstance(models.Model):
-    ISBN = models.CharField(max_length=13)
+    ISBN = models.CharField(max_length=17)
     title = models.ForeignKey(Book, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     cover = models.CharField(max_length=4, choices=COVERS)
@@ -58,8 +57,7 @@ class BookInstance(models.Model):
     date_of_receipt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.ISBN}: {self.title} - {self.publisher}: ' \
-               f'{self.date_of_receipt}'
+        return f'{self.ISBN}: {self.title} - {self.publisher}'
 
 
 class BookAuthor(models.Model):
