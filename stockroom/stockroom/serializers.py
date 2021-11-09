@@ -38,12 +38,11 @@ class BookInstanceSerializer(serializers.HyperlinkedModelSerializer):
     price = serializers.DecimalField(max_digits=6, decimal_places=2, required=True)
     cover = serializers.CharField(required=True)
     publisher = serializers.CharField(read_only=True)
-    author = AuthorSerializer(many=True)
     date_of_receipt = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Author
-        fields = ['pk', 'url', 'title', 'author', 'price', 'cover', 'publisher', 'date_of_receipt', ]
+        fields = ['pk', 'url', 'title', 'price', 'cover', 'publisher', 'date_of_receipt', ]
 
 
 class PublisherSerializer(serializers.HyperlinkedModelSerializer):

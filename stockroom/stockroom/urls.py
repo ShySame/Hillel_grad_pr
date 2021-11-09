@@ -45,7 +45,7 @@ urlpatterns = [
     path('swagger-ui/', TemplateView.as_view(template_name='swagger-ui.html',
                                              extra_context={'schema_url': 'openapi-schema'}), name='swagger-ui'),
     path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('api', include(router.urls)),
+    path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
 ]
