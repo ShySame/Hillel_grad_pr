@@ -1,5 +1,5 @@
-from .models import Author, Book, BookAuthor, BookInstance, \
-    Category, CategoryBook, Publisher
+from .models import Author, Book, BookAuthor, \
+    Category, CategoryBook, Order, OrderHistory
 
 from django.contrib import admin
 
@@ -23,38 +23,23 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'price', )
-    ordering = ('title',)
-    radio_fields = {'cover': admin.VERTICAL}
-    search_fields = ('title',)
+    list_display = ('id', 'title', 'price', 'available', 'rating',)
+    ordering = ('title', 'price',)
+    search_fields = ('title', 'available')
     inlines = [
         BookAuthorInline,
         BookCategoryInline,
     ]
 
-
-
-@admin.register(BookInstance)
-class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'ISBN', 'title', 'date_of_receipt',)
-    ordering = ['ISBN', 'title', ]
-    search_fields = ['title', ]
-    date_hierarchy = 'date_of_receipt'
-    readonly_fields = ['date_of_receipt', ]
-
     fieldsets = (
         ('Info',
          {
-             'fields': ('ISBN', 'title')
+             'fields': ('title',)
          }),
-        ('Publisher',
+        ('Price',
          {
-             'fields': ('publisher',)
+             'fields': ('price', 'available')
          }),
-        ('Date of receipt',
-         {
-             'fields': ('date_of_receipt',)
-         })
     )
 
 
@@ -66,11 +51,6 @@ class CategoryAdmin(admin.ModelAdmin):
     ]
 
 
-@admin.register(Publisher)
-class PublisherAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name',)
-
-
 @admin.register(CategoryBook)
 class CategoryBookAdmin(admin.ModelAdmin):
     list_display = ('book', 'category')
@@ -79,3 +59,14 @@ class CategoryBookAdmin(admin.ModelAdmin):
 @admin.register(BookAuthor)
 class BookAuthorAdmin(admin.ModelAdmin):
     list_display = ('book', 'author')
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('user_id', 'quantity')
+
+
+@admin.register(OrderHistory)
+class OrderHistoryAdmin(admin.ModelAdmin):
+    list_display = ('user_id', 'quantity', 'date')
+    date_hierarchy = 'date'

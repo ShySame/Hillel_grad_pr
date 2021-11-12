@@ -14,14 +14,25 @@ class Author(models.Model):
 class Category(models.Model):
     category = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     def __str__(self):
         return f'{self.category}'
+
+
+COVERS = (
+    ('Hard', 'Hard cover'),
+    ('Soft', 'Soft cover')
+)
 
 
 class Book(models.Model):
     category = models.ManyToManyField(Category, through='CategoryBook')
     title = models.CharField(max_length=250)
     author = models.ManyToManyField(Author, through='BookAuthor')
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    cover = models.CharField(max_length=4, choices=COVERS)
 
     class Meta:
         ordering = ('title',)
@@ -42,17 +53,9 @@ class Publisher(models.Model):
         return f'{self.name}'
 
 
-COVERS = (
-    ('Hard', 'Hard cover'),
-    ('Soft', 'Soft cover')
-)
-
-
 class BookInstance(models.Model):
     ISBN = models.CharField(max_length=17)
     title = models.ForeignKey(Book, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    cover = models.CharField(max_length=4, choices=COVERS)
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     date_of_receipt = models.DateTimeField(auto_now_add=True)
 

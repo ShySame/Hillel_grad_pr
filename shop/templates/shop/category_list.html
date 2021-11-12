@@ -1,0 +1,8 @@
+{% extends "base_generic.html" %}
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+    {% for cat in category_list %}
+        <a href="{% url 'book_list' %}?filter={{ cat.category }}">{{ cat.category }}</a>
+{% endfor %}
+{% endblock %}

@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import include, path
 
-
 from . import views, settings
 
 urlpatterns = [
     path('shop/', views.IndexView.as_view(), name='index'),
+    path('shop/books/', views.BookView.as_view(), name='book_list'),
+    path('shop/categories/', views.CategoryList.as_view(), name='book_category'),
     path('accounts/', include('authorization.urls')),
     path('admin/', admin.site.urls),
 ]

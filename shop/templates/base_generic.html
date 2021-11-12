@@ -14,7 +14,7 @@
             crossorigin="anonymous"></script>
 
 
-    <script src="{% static 'js/shop.js' %}"></script>
+{#    <script src="{% static 'js/shop.js' %}"></script>#}
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
 
 
@@ -29,12 +29,17 @@
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
                         <li><a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Home</a></li>
-{#                        <li><a href="{% url 'book_list' %}" class="nav-link px-2 text-white">Posts</a></li>#}
-{#                        <li><a href="{% url 'book_category' %}" class="nav-link px-2 text-white">Category</a></li>#}
+                        <li><a href="{% url 'book_list' %}" class="nav-link px-2 text-white">Books</a></li>
+                        <li><a href="{% url 'book_category' %}" class="nav-link px-2 text-white">Category</a></li>
                         <li>
-{#                            <button class="nav-link px-2 btn btn-secondary text-white js-contact"#}
-{#                                    data-url="{% url 'shop:help_me' %}">Help Me#}
-{#                            </button>#}
+                            <form class="d-flex">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                                       name="search_text">
+                                <a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Search</a>
+                            </form>
+                            {#                            <button class="nav-link px-2 btn btn-secondary text-white js-contact"#}
+                            {#                                    data-url="{% url 'shop:help_me' %}">Help Me#}
+                            {#                            </button>#}
                         </li>
 
                     </ul>
@@ -55,8 +60,8 @@
                                     <strong>{{ request.user.username }}</strong>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-{#                                    <a class="dropdown-item" href="{% url 'shop:post_create' %}">New Post</a>#}
-{#                                    <a class="dropdown-item" href="{% url 'shop:userposts' pk=user.pk %}">My posts</a>#}
+                                    {#                                    <a class="dropdown-item" href="{% url 'shop:post_create' %}">New Post</a>#}
+                                    {#                                    <a class="dropdown-item" href="{% url 'shop:userposts' pk=user.pk %}">My posts</a>#}
                                     <a class="dropdown-item" href="{% url 'profile' pk=user.pk %}">Profile</a>
 
                                     <hr class="dropdown-divider">

@@ -19,15 +19,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            ch = list(Category.objects.values_list('id', flat=True))
+            # ch = list(Category.objects.values_list('id', flat=True))
 
             author_li, book_li, bookinst_li, cat_li, booka_li = [], [], [], [], []
-            for i in Book.objects.values_list('id', flat=True):
-                g = random.sample(ch, 3)
-                for j in range(random.randint(1, 3)):
-                    cat_li.append(CategoryBook(category_id=g[j-1],
-                                                book_id=i))
-            CategoryBook.objects.bulk_create(cat_li)
+            # for i in Book.objects.values_list('id', flat=True):
+            #     g = random.sample(ch, 3)
+            #     for j in range(random.randint(1, 3)):
+            #         cat_li.append(CategoryBook(category_id=g[j-1],
+            #                                     book_id=i))
+            # CategoryBook.objects.bulk_create(cat_li)
 
             # for _ in range(2000):
             #     bookinst_li.append(BookInstance(ISBN=fake.isbn13(),
