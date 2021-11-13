@@ -11,8 +11,11 @@ class BookView(generic.ListView):
 
     def get_queryset(self, ):
         filter_text = self.request.GET.get("filter")
-        return Book.objects.filter(
-            category__book__category=Category.objects.get(category=filter_text))
+        if filter_text:
+            return Book.objects.filter(
+                category__book__category=Category.objects.get(category=filter_text))
+        else:
+            return Book.objects.all()
 
 
 class CategoryList(generic.ListView):

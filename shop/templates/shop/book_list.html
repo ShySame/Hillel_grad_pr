@@ -1,4 +1,7 @@
 {% extends "base_generic.html" %}
 {% block title %}Books{% endblock %}
 {% block content %}
+    {%  for book in book_list %}
+    {{ book }}
+    {% endfor %}
 {% endblock %}
