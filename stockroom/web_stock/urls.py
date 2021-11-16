@@ -1,4 +1,4 @@
-"""shop URL Configuration
+"""stockroom URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -13,18 +13,26 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('shop/', include('shop.urls'))
 """
+from rest_framework import permissions
+
+from web_stock import views
 from django.contrib import admin
-from django.conf.urls.static import static
 from django.urls import include, path
 
-from . import settings
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'authors', views.AuthorViewSet)
+router.register(r'books', views.BookViewSet)
+router.register(r'bookinst', views.BookInstanceViewSet)
+router.register(r'publishers', views.PublisherViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'category', views.CategoryViewSet)
+router.register(r'bookauthor', views.BookAuthorViewSet)
+
 
 urlpatterns = [
-    path('shop/', include('web_shop.urls')),
-    path('cart/', include('cart.urls')),
-    path('accounts/', include('authorization.urls')),
-    path('admin/', admin.site.urls),
-]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+]

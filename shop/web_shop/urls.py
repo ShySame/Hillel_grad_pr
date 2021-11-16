@@ -13,18 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('shop/', include('shop.urls'))
 """
-from django.contrib import admin
-from django.conf.urls.static import static
-from django.urls import include, path
+from django.urls import path
 
-from . import settings
+from web_shop import views
 
 urlpatterns = [
-    path('shop/', include('web_shop.urls')),
-    path('cart/', include('cart.urls')),
-    path('accounts/', include('authorization.urls')),
-    path('admin/', admin.site.urls),
+    path('', views.IndexView.as_view(), name='index'),
+    path('books/', views.BookView.as_view(), name='book_list'),
+    path('books/<int:pk>/', views.BookDetailView.as_view(), name='book_detail'),
+    path('categories/', views.CategoryList.as_view(), name='book_category'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

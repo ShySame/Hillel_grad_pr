@@ -31,8 +31,8 @@ class Book(models.Model):
     category = models.ManyToManyField(Category, through='CategoryBook')
     title = models.CharField(max_length=250)
     author = models.ManyToManyField(Author, through='BookAuthor')
-    price = models.DecimalField(max_digits=6, decimal_places=2)
     cover = models.CharField(max_length=4, choices=COVERS)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
 
     class Meta:
         ordering = ('title',)

@@ -31,6 +31,7 @@ class Book(models.Model):
     available = models.BooleanField(default=True)
     author = models.ManyToManyField(Author, through='BookAuthor')
     rating = models.FloatField(default=0)
+    image = models.URLField(default='https://placekitten.com/200/300')
 
     class Meta:
         ordering = ('title',)

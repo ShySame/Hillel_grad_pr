@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'shop',
+    'web_shop',
     'authorization',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 LOGIN_REDIRECT_URL = '/shop'
 
+CART_SESSION_ID = 'cart'
+
+
 STATIC_URL = '/static/'
 
 
@@ -131,3 +135,21 @@ STATIC_ROOT = BASE_DIR.joinpath("..", "staticfiles")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# CELERY_TASK_RESULT_EXPIRES = 3600
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TIMEZONE = TIME_ZONE
+# CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_TASK_TIME_LIMIT = 100 * 100
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_ACCEPT_CONTENT = ['application/json']
+#
+#
+# CELERY_BEAT_SCHEDULE = {
+#     "data_task": {
+#         "task": "",
+#     },
+#
+# }

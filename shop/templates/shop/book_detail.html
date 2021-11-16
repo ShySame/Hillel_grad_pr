@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1 class="h">{{ object.title }}</h1>
+    <p class="td">
+        <img src="{{ object.image }}"><br>
+        Price - {{ object.price }} $<br>
+        Rating - {{ object.rating }} ★ <br>
+        Authors -
+        {% if queryset %}
+            {% for i in queryset %}
+                {{ i }}<br>
+            {% endfor %}
+        {% else %}
+            Unknown author
+        {% endif %}
+    <form action="{% url "cart:cart_add" product_id=book.id %}" method="post">
+        {% csrf_token %}
+        {{ cart }}
+
+        <input type="submit" class="nav-link px-2 btn btn-secondary text-white js-contact" value="Add to cart">
+    </form>
+{% endblock %}

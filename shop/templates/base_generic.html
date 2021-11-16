@@ -32,14 +32,11 @@
                         <li><a href="{% url 'book_list' %}" class="nav-link px-2 text-white">Books</a></li>
                         <li><a href="{% url 'book_category' %}" class="nav-link px-2 text-white">Category</a></li>
                         <li>
-                            <form class="d-flex">
+                            <form class="d-flex" action="{% url 'book_list' %}" method="get">
                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                                       name="search_text">
-                                <a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Search</a>
+                                       name="search">
+                                <button class="nav-link px-2 btn btn-secondary text-white js-contact">Search</button>
                             </form>
-                            {#                            <button class="nav-link px-2 btn btn-secondary text-white js-contact"#}
-                            {#                                    data-url="{% url 'shop:help_me' %}">Help Me#}
-                            {#                            </button>#}
                         </li>
 
                     </ul>
@@ -54,7 +51,9 @@
 
                                 </a>
                             </div>
-                            <div>
+                            <div><a href="{% url 'cart:cart_detail' %}" style="margin-right: 10pt"
+                            class=" px-2 text-white">
+                                Cart</a>
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <strong>{{ request.user.username }}</strong>
@@ -73,7 +72,9 @@
                                 <img src="https://placekitten.com/400/400" alt="" width="42" height="42"
                                      class="rounded-circle me-2">
                             </div>
+
                         </div>
+
                         {#------------------------------------------------------------------------------#}
                     {% else %}
                         <div class="text-end">
