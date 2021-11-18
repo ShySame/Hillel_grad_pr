@@ -39,6 +39,7 @@ class BookDetailView(generic.DetailView):
         contex['cart'] = cart_product_form
         return contex
 
+
 class CategoryList(generic.ListView):
     model = Category
     template_name = 'shop/category_list.html'

@@ -1,7 +1,11 @@
 {% extends "base_generic.html" %}
-
+{% block title %}
+{{ object.title }}
+{% endblock %}
 {% block content %}
-    <h1 class="h">{{ object.title }}</h1>
+    {% load cache %}
+    {% cache 60 object.title object.image object.price object.rating %}
+    <h1 class="h"></h1>
     <p class="td">
         <img src="{{ object.image }}"><br>
         Price - {{ object.price }} $<br>
@@ -14,6 +18,7 @@
         {% else %}
             Unknown author
         {% endif %}
+    {% endcache %}
     <form action="{% url "cart:cart_add" product_id=book.id %}" method="post">
         {% csrf_token %}
         {{ cart }}

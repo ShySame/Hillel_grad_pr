@@ -12,13 +12,14 @@ class RegisterFormView(generic.CreateView):
     template_name = 'registration/registr.html'
     form_class = RegisterForm
 
-    success_url = reverse_lazy("login")
+    success_url = reverse_lazy("index")
 
     def form_valid(self, form):
-        user = form.save()
-        form.cleaned_data.get("password1")
+        form.save()
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password1")
 
-        user = authenticate(username=user.username, password=user._password)
+        user = authenticate(username=username, password=password)
         login(self.request, user)
         return super(RegisterFormView, self).form_valid(form)
 

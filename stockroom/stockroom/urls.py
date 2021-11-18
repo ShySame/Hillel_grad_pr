@@ -30,7 +30,7 @@ schema_view = get_schema_view(
         default_version='v1',
         description="Stockroom",
     ),
-    patterns=[path('v1/', include('web_stock.urls')), ],
+    patterns=[path('/v1/', include('web_stock.urls')), ],
     public=True,
     permission_classes=(permissions.AllowAny,),
 )

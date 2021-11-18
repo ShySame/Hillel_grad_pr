@@ -135,17 +135,22 @@ STATIC_ROOT = BASE_DIR.joinpath("..", "staticfiles")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mailhog'
+EMAIL_PORT = 1025
 
+CELERY_TASK_RESULT_EXPIRES = 3600
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TIME_LIMIT = 100 * 100
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['application/json']
 
-# CELERY_TASK_RESULT_EXPIRES = 3600
-# CELERY_TASK_TRACK_STARTED = True
-# CELERY_TIMEZONE = TIME_ZONE
-# CELERY_RESULT_BACKEND = 'django-db'
-# CELERY_TASK_TIME_LIMIT = 100 * 100
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_ACCEPT_CONTENT = ['application/json']
-#
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+
 #
 # CELERY_BEAT_SCHEDULE = {
 #     "data_task": {

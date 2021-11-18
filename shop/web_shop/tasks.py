@@ -10,7 +10,6 @@ AUTHOR_ENDPOINT = 'authors/'
 BOOK_ENDPOINT = 'books/'
 BOOK_INST_ENDPOINT = 'bookinst/'
 
-
 @shared_task
 def data_task():
     author_add()

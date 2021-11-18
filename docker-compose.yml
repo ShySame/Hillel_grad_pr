@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
 
-  shop:
+  shop: &shop
     container_name: shop
     build:
       context: .
@@ -12,13 +12,41 @@ services:
       - db-to-shop
     depends_on:
       - dbshop
+      - redis
     restart: on-failure
     expose:
       - 8000
-    ports:
-      - "8000:8000"
+    #    ports:
+    #      - "8000:8000"
     volumes:
       - ./shop/:/usr/app
+    environment:
+      - CELERY_BROKER 'redis://redis:6379/0'
+      - CELERY_BACKEND 'redis://redis:6379/0'
+
+
+  celery:
+    <<: *shop
+    container_name: celery
+    command: celery -A shop worker -B -l INFO
+    environment:
+      CELERY_BROKER: 'redis://redis:6379/0'
+      CELERY_BACKEND: 'redis://redis:6379/0'
+      WEB_HOST: 'shop'
+      WEB_PORT: '8000'
+    depends_on:
+      - shop
+      - redis
+    networks:
+      - net
+
+
+  redis:
+    image: redis:latest
+    networks:
+      - net
+    expose:
+      - 6379
 
   stockroom:
     container_name: stockroom
@@ -33,10 +61,29 @@ services:
     restart: on-failure
     expose:
       - 8001
-    ports:
-      - "8001:8001"
+    #    ports:
+    #      - "8001:8001"
     volumes:
       - ./stockroom/:/usr/app
+
+
+
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    restart: on-failure
+    networks:
+      - net
+    ports:
+      - '80:80'
+      - '8025:8025'
+      - '81:81'
+    depends_on:
+      - shop
+      - stockroom
+
 
   dbshop:
     container_name: dbshop
@@ -48,8 +95,8 @@ services:
     restart: on-failure
     expose:
       - 5432
-    ports:
-      - "5431:5432"
+    #    ports:
+    #      - "5431:5432"
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'postgres'
@@ -65,25 +112,21 @@ services:
     restart: on-failure
     expose:
       - 5432
-    ports:
-      - "5433:5432"
+    #    ports:
+    #      - "5433:5432"
     environment:
       POSTGRES_USER: 'postgres1'
       POSTGRES_PASSWORD: 'postgres1'
       POSTGRES_DB: 'stock_db'
 
-#  pgadmin:
-#    container_name: pgadmin
-#    image: dpage/pgadmin4
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: admin@mail.com
-#      PGADMIN_DEFAULT_PASSWORD: admin
-#    ports:
-#      - "5050:80"
-#    networks:
-#      - net
-#      - db-to-shop
-#      - db-to-stock
+  mailhog:
+    image: mailhog/mailhog:latest
+    restart: on-failure
+    expose:
+      - 8025
+    networks:
+      - net
+
 
 networks:
   net:

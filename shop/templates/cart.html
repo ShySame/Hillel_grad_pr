@@ -5,8 +5,8 @@
 {% endblock %}
 {% block content %}
     <table class="table">
-  <thead>
-    <tr>
+        <thead>
+        <tr>
             <th scope="col">Image</th>
             <th scope="col">Product</th>
             <th scope="col">Quantity</th>
@@ -26,7 +26,7 @@
                     </td>
                     <td>{{ product.title }}</td>
                     <td>{{ item.quantity }}</td>
-                    <td><a href="{% url "cart:cart_remove" product.id%}">Remove</a></td>
+                    <td><a href="{% url "cart:cart_remove" product.id %}">Remove</a></td>
                     <td class="num">${{ item.price }}</td>
                     <td class="num">${{ item.total_price }}</td>
                 </tr>
@@ -41,6 +41,7 @@
     </table>
     <p class="text-right">
         <a href="{% url "book_list" %}" class="px-2 btn btn-secondary text-white js-contact">Continue shopping</a>
-        <a href="#" class=" px-2 btn btn-secondary text-white js-contact">Checkout</a>
-    </p>
+    <form action="{% url 'cart:order_confirm' %}">
+        <button class="px-2 btn btn-secondary text-white js-contact" type="submit">Buy</button>
+    </form>
 {% endblock %}
